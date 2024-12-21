@@ -1,15 +1,10 @@
 package com.greenhouse.demo.entity;
-//package com.Student_info.entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Setter
@@ -21,8 +16,10 @@ public class Plant {
     // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment Primary Key
-    @Column(name = "plant_id")
     private Long plantId;
+
+    @Column(name = "plant_code",unique = true,nullable = false)
+    private String plantCode;
 
     @Column(name = "plant_name", nullable = false, length = 100)
     private String plantName;
@@ -46,15 +43,17 @@ public class Plant {
     private String wateringFrequency;
 
     @Column(name = "last_updated", nullable = false)
-    private LocalDateTime lastUpdated;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate lastUpdated;
 
     // Constructors
     public Plant() {
     }
 
-    public Plant(String plantName, String plantType, String soilType, String temperatureRange,
+    public Plant(String plantCode , String plantName, String plantType, String soilType, String temperatureRange,
                  String humidityRange, String lightRequirement, String wateringFrequency,
-                 LocalDateTime lastUpdated) {
+                 LocalDate lastUpdated) {
+        this.plantCode = plantCode;
         this.plantName = plantName;
         this.plantType = plantType;
         this.soilType = soilType;
@@ -68,8 +67,8 @@ public class Plant {
     @Override
     public String toString() {
         return "Plant{" +
-                "plantId=" + plantId +
-                ", plantName='" + plantName + '\'' +
+                "plantCode='" + plantCode + '\'' +
+                "plantName='" + plantName + '\'' +
                 ", plantType='" + plantType + '\'' +
                 ", soilType='" + soilType + '\'' +
                 ", temperatureRange='" + temperatureRange + '\'' +
