@@ -52,4 +52,14 @@ public class PlantController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plant not found with code: " + plantCode);
         }
     }
+    // Update plant by plantCode
+    @PutMapping("/update/{plantCode}")
+    public ResponseEntity<Plant> updatePlant(@PathVariable String plantCode, @RequestBody Plant plant) {
+        try {
+            Plant updatedPlant = plantService.updatePlant(plantCode, plant);
+            return ResponseEntity.ok(updatedPlant);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 }

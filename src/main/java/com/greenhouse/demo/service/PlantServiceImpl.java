@@ -40,5 +40,24 @@ public class PlantServiceImpl implements PlantService{
     public Optional<Plant> getPlantByCode(String plantCode) {
         return PlantRepo.getByPlantCode(plantCode);
     }
+    @Override
+    public Plant updatePlant(String plantCode, Plant plant) {
+        Optional<Plant> existingPlant = PlantRepo.getByPlantCode(plantCode);
+        if (existingPlant.isPresent()) {
+            Plant updatedPlant = existingPlant.get();
+            updatedPlant.setPlantName(plant.getPlantName());
+            updatedPlant.setPlantType(plant.getPlantType());
+            updatedPlant.setSoilType(plant.getSoilType());
+            updatedPlant.setTemperatureRange(plant.getTemperatureRange());
+            updatedPlant.setHumidityRange(plant.getHumidityRange());
+            updatedPlant.setLightRequirement(plant.getLightRequirement());
+            updatedPlant.setWateringFrequency(plant.getWateringFrequency());
+            updatedPlant.setLastUpdated(plant.getLastUpdated());
+
+            return PlantRepo.save(updatedPlant);
+        } else {
+            throw new RuntimeException("Plant with code " + plantCode + " not found for update.");
+        }
+    }
 
 }
