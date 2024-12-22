@@ -14,4 +14,5 @@ public interface PlantService {
     // GET plant by unique plantCode
     Optional<Plant> getPlantByCode(String plantCode);  // Already added
     Plant updatePlant(String plantCode, Plant plant);
+    void deletePlantByCode(String plantCode);
 }
