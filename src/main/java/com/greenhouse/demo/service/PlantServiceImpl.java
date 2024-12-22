@@ -59,5 +59,14 @@ public class PlantServiceImpl implements PlantService{
             throw new RuntimeException("Plant with code " + plantCode + " not found for update.");
         }
     }
+    @Override
+    public void deletePlantByCode(String plantCode) {
+        Optional<Plant> existingPlant = PlantRepo.getByPlantCode(plantCode);
+        if (existingPlant.isPresent()) {
+            PlantRepo.delete(existingPlant.get());
+        } else {
+            throw new RuntimeException("Plant with code " + plantCode + " not found for deletion.");
+        }
+    }
 
 }

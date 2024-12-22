@@ -62,4 +62,13 @@ public class PlantController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+    @DeleteMapping("/delete/{plantCode}")
+    public ResponseEntity<?> deletePlantByCode(@PathVariable String plantCode) {
+        try {
+            plantService.deletePlantByCode(plantCode);
+            return ResponseEntity.ok("Plant with code " + plantCode + " has been deleted successfully.");
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
 }
