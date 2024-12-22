@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,4 +29,16 @@ public class PlantServiceImpl implements PlantService{
         System.out.println(plant);
         return PlantRepo.save(plant);
     }
+    // GET all plants
+    @Override
+    public List<Plant> getAllPlants() {
+        return PlantRepo.findAll();
+    }
+
+    // GET plant by unique plantCode
+    @Override
+    public Optional<Plant> getPlantByCode(String plantCode) {
+        return PlantRepo.getByPlantCode(plantCode);
+    }
+
 }
